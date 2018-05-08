@@ -31,19 +31,19 @@ class Handler(FileSystemEventHandler):
                 self.pattern.match(event.src_path) != None
 
     def on_created(self, event):
-        self.nvim.command('echo "created: ' + event.src_path + '"')
         if self.is_valid(event):
-            self.notify_metals(FILE_CREATED, event.src_path)
+            self.nvim.command('echo "created: ' + event.src_path + '"')
+            #self.notify_metals(FILE_CREATED, event.src_path)
 
     def on_modified(self, event):
-        self.nvim.command('echo "modified: ' + event.src_path + '"')
         if self.is_valid(event):
-            self.notify_metals(FILE_MODIFIED, event.src_path)
+            self.nvim.command('echo "modified: ' + event.src_path + '"')
+            #self.notify_metals(FILE_MODIFIED, event.src_path)
 
     def on_deleted(self, event):
-        self.nvim.command('echo "deleted: ' + event.src_path + '"')
         if self.is_valid(event):
-            self.notify_metals(FILE_DELETED, event.src_path)
+            self.nvim.command('echo "deleted: ' + event.src_path + '"')
+            #self.notify_metals(FILE_DELETED, event.src_path)
 
 @neovim.plugin
 class MetalsFilewatcherPlugin(object):
