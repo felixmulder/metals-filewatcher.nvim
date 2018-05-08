@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import time
 import re
 import os
 import neovim
@@ -32,18 +31,15 @@ class Handler(FileSystemEventHandler):
 
     def on_created(self, event):
         if self.is_valid(event):
-            self.nvim.command('echo "created: ' + event.src_path + '"')
-            #self.notify_metals(FILE_CREATED, event.src_path)
+            self.notify_metals(FILE_CREATED, event.src_path)
 
     def on_modified(self, event):
         if self.is_valid(event):
-            self.nvim.command('echo "modified: ' + event.src_path + '"')
-            #self.notify_metals(FILE_MODIFIED, event.src_path)
+            self.notify_metals(FILE_MODIFIED, event.src_path)
 
     def on_deleted(self, event):
         if self.is_valid(event):
-            self.nvim.command('echo "deleted: ' + event.src_path + '"')
-            #self.notify_metals(FILE_DELETED, event.src_path)
+            self.notify_metals(FILE_DELETED, event.src_path)
 
 @neovim.plugin
 class MetalsFilewatcherPlugin(object):
@@ -56,11 +52,9 @@ class MetalsFilewatcherPlugin(object):
 
     @neovim.function('MetalsFileWatcherStart', sync=False)
     def start_my_watch(self, args):
-        self.nvim.command('echo "started!"')
         self.observer.start()
 
     @neovim.function('MetalsFileWatcherStop', sync=False)
     def stop_my_watch(self, args):
-        self.nvim.command('echo "stopped!"')
         self.observer.stop()
         self.observer.join()
