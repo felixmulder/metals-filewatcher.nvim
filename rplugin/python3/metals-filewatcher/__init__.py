@@ -31,17 +31,17 @@ class Handler(FileSystemEventHandler):
                 self.pattern.match(event.src_path) != None
 
     def on_created(self, event):
-        self.nvim.call('echo "created: ' + event.src_path + '"')
+        self.nvim.command('echo "created: ' + event.src_path + '"')
         if self.is_valid(event):
             self.notify_metals(FILE_CREATED, event.src_path)
 
     def on_modified(self, event):
-        self.nvim.call('echo "modified: ' + event.src_path + '"')
+        self.nvim.command('echo "modified: ' + event.src_path + '"')
         if self.is_valid(event):
             self.notify_metals(FILE_MODIFIED, event.src_path)
 
     def on_deleted(self, event):
-        self.nvim.call('echo "deleted: ' + event.src_path + '"')
+        self.nvim.command('echo "deleted: ' + event.src_path + '"')
         if self.is_valid(event):
             self.notify_metals(FILE_DELETED, event.src_path)
 
@@ -56,11 +56,11 @@ class MetalsFilewatcherPlugin(object):
 
     @neovim.function('MetalsFileWatcherStart', sync=False)
     def start_my_watch(self, args):
-        self.nvim.call('echo "started!"')
+        self.nvim.command('echo "started!"')
         self.observer.start()
 
     @neovim.function('MetalsFileWatcherStop', sync=False)
     def stop_my_watch(self, args):
-        self.nvim.call('echo "stopped!"')
+        self.nvim.command('echo "stopped!"')
         self.observer.stop()
         self.observer.join()
