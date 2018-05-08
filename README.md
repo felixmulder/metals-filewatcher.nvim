@@ -40,5 +40,7 @@ and
 
 ## Future work
 - Automatic start/stop of file-watching in `*.scala` files (this can currently be scripted in `init.vim`)
-- Making sure that the plugin is only active if `LanguageClient-neovim` is installed
-- There seemed to be some interferance with `deoplete`, not sure, have to investigate
+- Make sure that the plugin is only active if `LanguageClient-neovim` is installed
+- Add watchers for other files than `*.semanticdb`, see
+  [metals/docs/new-editor.md](https://github.com/scalameta/metals/blob/master/docs/new-editor.md#file-watching)
+- Fix possible interferance with `deoplete`, not sure, have to investigate
