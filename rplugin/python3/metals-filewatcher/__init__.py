@@ -24,26 +24,29 @@ class Handler(FileSystemEventHandler):
         self.send_cmd(cmd)
 
     def send_cmd(self, cmd):
-        nvim.call("LanguageClient#Notify", args=["workspace/didChangeWatchedFiles", cmd])
+        self.nvim.call("LanguageClient#Notify", args=["workspace/didChangeWatchedFiles", cmd])
 
     def is_valid(self, event):
         return not event.is_directory and \
                 self.pattern.match(event.src_path) != None
 
     def on_created(self, event):
+        self.nvim.call('echo "created: ' + event.src_path + '"')
         if self.is_valid(event):
             self.notify_metals(FILE_CREATED, event.src_path)
 
     def on_modified(self, event):
+        self.nvim.call('echo "modified: ' + event.src_path + '"')
         if self.is_valid(event):
             self.notify_metals(FILE_MODIFIED, event.src_path)
 
     def on_deleted(self, event):
+        self.nvim.call('echo "deleted: ' + event.src_path + '"')
         if self.is_valid(event):
             self.notify_metals(FILE_DELETED, event.src_path)
 
 @neovim.plugin
-class TestPlugin(object):
+class MetalsFilewatcherPlugin(object):
     def __init__(self, nvim):
         self.path = ".*\.semanticdb"
         self.handler = Handler(self.path, nvim)
@@ -51,11 +54,11 @@ class TestPlugin(object):
         self.observer.schedule(self.handler, '.', recursive=True)
         self.nvim = nvim
 
-    @neovim.function('StartMyWatch', sync=True)
-    def start_my_watch(self, args):
+    @neovim.function('MetalsFileWatcherStart', sync=True)
+    def start_my_watch(self):
         self.observer.start()
 
-    @neovim.function('StartMyWatch', sync=True)
-    def stop_my_watch(self, args):
+    @neovim.function('MetalsFileWatcherStop', sync=True)
+    def stop_my_watch(self):
         self.observer.stop()
         self.observer.join()
