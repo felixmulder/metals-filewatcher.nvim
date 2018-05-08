@@ -54,11 +54,13 @@ class MetalsFilewatcherPlugin(object):
         self.observer.schedule(self.handler, '.', recursive=True)
         self.nvim = nvim
 
-    @neovim.function('MetalsFileWatcherStart', sync=True)
+    @neovim.function('MetalsFileWatcherStart', sync=False)
     def start_my_watch(self, args):
+        self.nvim.call('echo "started!"')
         self.observer.start()
 
-    @neovim.function('MetalsFileWatcherStop', sync=True)
+    @neovim.function('MetalsFileWatcherStop', sync=False)
     def stop_my_watch(self, args):
+        self.nvim.call('echo "stopped!"')
         self.observer.stop()
         self.observer.join()
