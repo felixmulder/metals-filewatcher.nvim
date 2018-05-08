@@ -41,3 +41,4 @@ and
 ## Future work
 - Automatic start/stop of file-watching in `*.scala` files (this can currently be scripted in `init.vim`)
 - Making sure that the plugin is only active if `LanguageClient-neovim` is installed
+- There seemed to be some interferance with `deoplete`, not sure, have to investigate
