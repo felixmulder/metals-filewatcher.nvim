@@ -44,14 +44,14 @@ class Handler(FileSystemEventHandler):
 @neovim.plugin
 class MetalsFilewatcherPlugin(object):
     def __init__(self, nvim):
-        self.path = ".*\.semanticdb"
-        self.handler = Handler(self.path, nvim)
-        self.observer = Observer()
-        self.observer.schedule(self.handler, '.', recursive=True)
         self.nvim = nvim
 
     @neovim.function('MetalsFilewatcherStart', sync=False)
     def start_my_watch(self, args):
+        self.path = ".*\.semanticdb"
+        self.handler = Handler(self.path, self.nvim)
+        self.observer = Observer()
+        self.observer.schedule(self.handler, '.', recursive=True)
         self.observer.start()
 
     @neovim.function('MetalsFilewatcherStop', sync=False)
