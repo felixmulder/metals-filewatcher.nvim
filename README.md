@@ -23,18 +23,24 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 
 Plug 'felixmulder/metals-filewatcher.nvim', { 'do': ':UpdateRemotePlugins' }
+
 ```
 
 ## Usage
-Currently, you have to manually start (and stop) the filewatcher:
+Currently, you have to start (and stop) the filewatcher, this can be automated
+when you open a scala file:
 
+```vim
+autocmd BufRead *.scala :call MetalsFilewatcherStart()
 ```
+
+to manually stop and start the file watcher you can do:
+
+```vim
+" start:
 :call MetalsFilewatcherStart()
-```
 
-and
-
-```
+" and to stop:
 :call MetalsFilewatcherStop()
 ```
 
